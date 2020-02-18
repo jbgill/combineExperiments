@@ -48,13 +48,13 @@ struct GithubAPI {
             throw APIFailureCondition.invalidServerResponse
         }
         return data
-    }
-    .decode(type: GithubAPIUser.self, decoder: JSONDecoder())
-    .map { userData -> GithubAPIUser? in
-      userData
-    }
-    .replaceError(with: nil)
-    .eraseToAnyPublisher()
+      }
+      .decode(type: GithubAPIUser.self, decoder: JSONDecoder())
+      .map { userData -> GithubAPIUser? in
+        userData
+      }
+      .replaceError(with: nil)
+      .eraseToAnyPublisher()
     return publisher
   }
   
