@@ -43,7 +43,7 @@ class ViewController: UIViewController {
         } else {
           self.hideSpinner()
         }
-    }
+      }
     apiNetworkActivitySubscriber = AnyCancellable(apiActivitySub)
     
     usernameSubscriber = $username
