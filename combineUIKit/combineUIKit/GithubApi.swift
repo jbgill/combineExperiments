@@ -27,7 +27,7 @@ struct GithubAPIUser: Decodable {
 
 struct GithubAPI {
   
-  // externally accessible publsher that indicates that network activity is happening in the API proxy
+  // externally accessible publisher that indicates that network activity is happening in the API proxy
   static let networkActivityPublisher = PassthroughSubject<Bool, Never>()
   
   
