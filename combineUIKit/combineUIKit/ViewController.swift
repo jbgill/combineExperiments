@@ -27,9 +27,7 @@ class ViewController: UIViewController {
 
 
   @IBAction func goPressed(_ sender: Any) {
-    guard let username = usernameField.text,
-          username.count > 3
-    else {
+    guard let username = usernameField.text else {
       return
     }
     

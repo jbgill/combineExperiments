@@ -9,10 +9,7 @@
 import Foundation
 import Combine
 
-
-
 //  this is borrowed heavily from :  https://heckj.github.io/swiftui-notes/
-
 
 enum APIFailureCondition: Error {
   case invalidServerResponse
@@ -27,11 +24,6 @@ struct GithubAPIUser: Decodable {
 
 struct GithubAPI {
   
-  // externally accessible publisher that indicates that network activity is happening in the API proxy
-  static let networkActivityPublisher = PassthroughSubject<Bool, Never>()
-  
-  
-  
   static func retrieveGithubUser(username: String) -> AnyPublisher<GithubAPIUser?, Never> {
     
     if username.count < 3 {
@@ -39,13 +31,6 @@ struct GithubAPI {
     }
     let assembledURL = String("https://api.github.com/users/\(username)")
     let publisher = URLSession.shared.dataTaskPublisher(for: URL(string: assembledURL)!)
-      .handleEvents(receiveSubscription: { _ in
-        networkActivityPublisher.send(true)
-      }, receiveCompletion: { _ in
-        networkActivityPublisher.send(false)
-      }, receiveCancel: {
-        networkActivityPublisher.send(false)
-      })
       .tryMap { data, response -> Data in
         guard let httpResponse = response as? HTTPURLResponse,
           httpResponse.statusCode == 200 else {
@@ -61,9 +46,5 @@ struct GithubAPI {
       .eraseToAnyPublisher()
     return publisher
   }
-  
-  
-  
-  
   
 }
